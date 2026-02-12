@@ -7,6 +7,8 @@ import {
   Settings,
   ChevronLeft,
   ChevronRight,
+  Gift,
+  BookOpen,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
@@ -17,6 +19,8 @@ const nav = [
   { to: "/admin/seasons", label: "الفصول", icon: Sun },
   { to: "/admin/stars", label: "النجوم", icon: Star },
   { to: "/admin/stars/new", label: "إضافة نجمة", icon: PlusCircle },
+  { to: "/admin/occasions", label: "المناسبات", icon: Gift },
+  { to: "/admin/prayers", label: "الأدعية", icon: BookOpen },
   { to: "/admin/settings", label: "الإعدادات", icon: Settings },
 ];
 

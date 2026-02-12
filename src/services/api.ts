@@ -3,7 +3,10 @@ import type {
   ApiResponse,
   CalendarSeason,
   LoginResult,
+  Occasion,
+  OccasionsSections,
   PaginatedStars,
+  Prayer,
   Season,
   Star,
 } from "@/types/api";
@@ -207,6 +210,169 @@ export async function updateStar(
 
 export async function deleteStar(id: number): Promise<void> {
   await api.delete(`/admin/stars/${id}`);
+}
+
+/** Occasions: raw shape from backend (snake_case) */
+interface RawOccasion {
+  id: number;
+  hijri_month: number;
+  hijri_day: number;
+  title: string;
+  prayer_title: string;
+  prayer_text: string | null;
+  hijri_display?: string;
+  created_at?: string;
+  updated_at?: string;
+}
+
+function rawOccasionToOccasion(r: RawOccasion): Occasion {
+  return {
+    id: r.id,
+    hijriMonth: r.hijri_month,
+    hijriDay: r.hijri_day,
+    title: r.title,
+    prayerTitle: r.prayer_title,
+    prayerText: r.prayer_text ?? null,
+    hijriDisplay: r.hijri_display,
+    createdAt: r.created_at,
+    updatedAt: r.updated_at,
+  };
+}
+
+/** Public: get occasions sections (today, current month, next month, year) */
+export async function getOccasionsSections(): Promise<OccasionsSections> {
+  const { data } = await api.get<ApiResponse<{
+    today: RawOccasion[];
+    currentMonth: RawOccasion[];
+    nextMonth: RawOccasion[];
+    year: RawOccasion[];
+  }>>("/occasions");
+  const d = data.data;
+  return {
+    today: d.today.map(rawOccasionToOccasion),
+    currentMonth: d.currentMonth.map(rawOccasionToOccasion),
+    nextMonth: d.nextMonth.map(rawOccasionToOccasion),
+    year: d.year.map(rawOccasionToOccasion),
+  };
+}
+
+/** Admin occasions */
+export async function listOccasions(params?: { page?: number; limit?: number }): Promise<{
+  occasions: Occasion[];
+  total: number;
+  page: number;
+  limit: number;
+  totalPages: number;
+}> {
+  const { data } = await api.get<ApiResponse<{
+    occasions: RawOccasion[];
+    total: number;
+    page: number;
+    limit: number;
+    totalPages: number;
+  }>>("/admin/occasions", { params });
+  const d = data.data;
+  return {
+    occasions: d.occasions.map(rawOccasionToOccasion),
+    total: d.total,
+    page: d.page,
+    limit: d.limit,
+    totalPages: d.totalPages,
+  };
+}
+
+export async function getOccasionById(id: number): Promise<Occasion> {
+  const { data } = await api.get<ApiResponse<RawOccasion>>(`/admin/occasions/${id}`);
+  return rawOccasionToOccasion(data.data);
+}
+
+export async function createOccasion(body: {
+  hijriMonth: number;
+  hijriDay: number;
+  title: string;
+  prayerTitle: string;
+  prayerText?: string | null;
+}): Promise<Occasion> {
+  const { data } = await api.post<ApiResponse<RawOccasion>>("/admin/occasions", body);
+  return rawOccasionToOccasion(data.data);
+}
+
+export async function updateOccasion(
+  id: number,
+  body: Partial<{
+    hijriMonth: number;
+    hijriDay: number;
+    title: string;
+    prayerTitle: string;
+    prayerText: string | null;
+  }>
+): Promise<Occasion> {
+  const { data } = await api.put<ApiResponse<RawOccasion>>(`/admin/occasions/${id}`, body);
+  return rawOccasionToOccasion(data.data);
+}
+
+export async function deleteOccasion(id: number): Promise<void> {
+  await api.delete(`/admin/occasions/${id}`);
+}
+
+/** Admin prayers (backend returns snake_case) */
+interface RawPrayer {
+  id: number;
+  text: string;
+  created_at?: string;
+  updated_at?: string;
+}
+
+function rawPrayerToPrayer(r: RawPrayer): Prayer {
+  return {
+    id: r.id,
+    text: r.text,
+    createdAt: r.created_at,
+    updatedAt: r.updated_at,
+  };
+}
+
+export async function listPrayers(params?: { page?: number; limit?: number }): Promise<{
+  prayers: Prayer[];
+  total: number;
+  page: number;
+  limit: number;
+  totalPages: number;
+}> {
+  const { data } = await api.get<ApiResponse<{
+    prayers: RawPrayer[];
+    total: number;
+    page: number;
+    limit: number;
+    totalPages: number;
+  }>>("/admin/prayers", { params });
+  const d = data.data;
+  return {
+    prayers: d.prayers.map(rawPrayerToPrayer),
+    total: d.total,
+    page: d.page,
+    limit: d.limit,
+    totalPages: d.totalPages,
+  };
+}
+
+export async function getPrayerById(id: number): Promise<Prayer> {
+  const { data } = await api.get<ApiResponse<RawPrayer>>(`/admin/prayers/${id}`);
+  return rawPrayerToPrayer(data.data);
+}
+
+export async function createPrayer(body: { text: string }): Promise<Prayer> {
+  const { data } = await api.post<ApiResponse<RawPrayer>>("/admin/prayers", body);
+  return rawPrayerToPrayer(data.data);
+}
+
+export async function updatePrayer(id: number, body: { text: string }): Promise<Prayer> {
+  const { data } = await api.put<ApiResponse<RawPrayer>>(`/admin/prayers/${id}`, body);
+  return rawPrayerToPrayer(data.data);
+}
+
+export async function deletePrayer(id: number): Promise<void> {
+  await api.delete(`/admin/prayers/${id}`);
 }
 
 export { getToken, clearToken };

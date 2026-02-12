@@ -44,3 +44,20 @@ export interface PaginatedStars {
     limit: number;
     totalPages: number;
 }
+export interface Occasion {
+    id: number;
+    hijriMonth: number;
+    hijriDay: number;
+    title: string;
+    prayerTitle: string;
+    prayerText: string | null;
+    hijriDisplay?: string;
+    createdAt?: string;
+    updatedAt?: string;
+}
+export interface OccasionsSections {
+    today: Occasion[];
+    currentMonth: Occasion[];
+    nextMonth: Occasion[];
+    year: Occasion[];
+}

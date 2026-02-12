@@ -46,11 +46,18 @@ export function CalendarPage() {
           <h1 className="text-3xl font-bold tracking-tight text-foreground sm:text-4xl">
             التقويم الزراعي والطوالع
           </h1>
-          <Link to="/admin/login">
-            <Button variant="outline" className="rounded-xl border-2 px-5 py-2 font-medium">
-              Admin
-            </Button>
-          </Link>
+          <div className="flex gap-2">
+            <Link to="/occasions">
+              <Button variant="outline" className="rounded-xl border-2 px-5 py-2 font-medium">
+                المناسبات
+              </Button>
+            </Link>
+            <Link to="/admin/login">
+              <Button variant="outline" className="rounded-xl border-2 px-5 py-2 font-medium">
+                Admin
+              </Button>
+            </Link>
+          </div>
         </header>
 
         <div className="space-y-6 sm:space-y-8">
