@@ -20,7 +20,7 @@ export function DataTable<T>({
   data,
   columns,
   keyExtractor,
-  emptyMessage = "No data",
+  emptyMessage = "لا توجد بيانات",
   className,
 }: DataTableProps<T>) {
   return (

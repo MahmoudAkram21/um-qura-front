@@ -23,17 +23,17 @@ export function AdminLoginPage() {
       await login(email.trim(), password);
       navigate(from, { replace: true });
     } catch {
-      setError("Invalid email or password");
+      setError("البريد أو كلمة المرور غير صحيحة");
     } finally {
       setLoading(false);
     }
   }
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-background p-4 page-gradient">
+    <div className="flex min-h-screen items-center justify-center bg-background p-4 page-gradient" dir="rtl" lang="ar">
       <Card className="w-full max-w-md rounded-2xl border-border/80 shadow-[var(--shadow-card)]">
         <CardHeader className="space-y-1.5 pb-6">
-          <CardTitle className="text-2xl tracking-tight">Admin Login</CardTitle>
+          <CardTitle className="text-2xl tracking-tight">تسجيل دخول المشرف</CardTitle>
           <CardDescription className="text-muted-foreground">
             التقويم الزراعي والطوالع
           </CardDescription>
@@ -42,7 +42,7 @@ export function AdminLoginPage() {
           <form onSubmit={handleSubmit} className="space-y-5">
             <div className="space-y-2">
               <label htmlFor="email" className="text-sm font-medium">
-                Email
+                البريد الإلكتروني
               </label>
               <Input
                 id="email"
@@ -57,7 +57,7 @@ export function AdminLoginPage() {
             </div>
             <div className="space-y-2">
               <label htmlFor="password" className="text-sm font-medium">
-                Password
+                كلمة المرور
               </label>
               <Input
                 id="password"
@@ -79,7 +79,7 @@ export function AdminLoginPage() {
               className="w-full rounded-xl py-2.5 font-medium"
               disabled={loading}
             >
-              {loading ? "Signing in..." : "Sign in"}
+              {loading ? "جاري تسجيل الدخول..." : "تسجيل الدخول"}
             </Button>
           </form>
         </CardContent>

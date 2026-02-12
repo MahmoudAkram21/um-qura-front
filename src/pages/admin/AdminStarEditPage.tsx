@@ -78,7 +78,7 @@ export function AdminStarEditPage() {
       const msg = e && typeof e === "object" && "response" in e
         ? (e as { response?: { data?: { message?: string } } }).response?.data?.message
         : null;
-      setError(msg ?? (e instanceof Error ? e.message : "Failed to update star"));
+      setError(msg ?? (e instanceof Error ? e.message : "فشل تحديث النجمة"));
     } finally {
       setSaving(false);
     }
@@ -102,12 +102,12 @@ export function AdminStarEditPage() {
     }));
   }
 
-  if (loading) return <p className="text-muted-foreground">Loading...</p>;
-  if (!star) return <p className="text-destructive">Star not found</p>;
+  if (loading) return <p className="text-muted-foreground">جاري التحميل...</p>;
+  if (!star) return <p className="text-destructive">النجمة غير موجودة</p>;
 
   return (
     <div className="space-y-6">
-      <h1 className="text-2xl font-bold">Edit Star</h1>
+      <h1 className="text-2xl font-bold">تعديل النجمة</h1>
       {error && (
         <div className="rounded-xl border border-destructive/50 bg-destructive/10 px-4 py-3 text-sm text-destructive">
           {error}
@@ -117,11 +117,11 @@ export function AdminStarEditPage() {
         <div className="grid gap-6 lg:grid-cols-2">
           <Card>
             <CardHeader>
-              <CardTitle>Basic</CardTitle>
+              <CardTitle>البيانات الأساسية</CardTitle>
             </CardHeader>
             <CardContent className="space-y-4">
               <div>
-                <label className="mb-1 block text-sm font-medium">Name</label>
+                <label className="mb-1 block text-sm font-medium">الاسم</label>
                 <Input
                   value={form.name}
                   onChange={(e) => setForm((f) => ({ ...f, name: e.target.value }))}
@@ -129,7 +129,7 @@ export function AdminStarEditPage() {
                 />
               </div>
               <div>
-                <label className="mb-1 block text-sm font-medium">Season</label>
+                <label className="mb-1 block text-sm font-medium">الفصل</label>
                 <select
                   className="w-full rounded-md border border-input bg-background px-3 py-2 text-sm"
                   value={form.seasonId}
@@ -146,7 +146,7 @@ export function AdminStarEditPage() {
               </div>
               <div className="grid grid-cols-2 gap-4">
                 <div>
-                  <label className="mb-1 block text-sm font-medium">Start date</label>
+                  <label className="mb-1 block text-sm font-medium">تاريخ البداية</label>
                   <Input
                     type="date"
                     value={form.startDate}
@@ -156,7 +156,7 @@ export function AdminStarEditPage() {
                   />
                 </div>
                 <div>
-                  <label className="mb-1 block text-sm font-medium">End date</label>
+                  <label className="mb-1 block text-sm font-medium">تاريخ النهاية</label>
                   <Input
                     type="date"
                     value={form.endDate}
@@ -167,7 +167,7 @@ export function AdminStarEditPage() {
                 </div>
               </div>
               <div>
-                <label className="mb-1 block text-sm font-medium">Description</label>
+                <label className="mb-1 block text-sm font-medium">الوصف</label>
                 <Textarea
                   value={form.description}
                   onChange={(e) =>
@@ -177,7 +177,7 @@ export function AdminStarEditPage() {
                 />
               </div>
               <div>
-                <label className="mb-1 block text-sm font-medium">Weather info</label>
+                <label className="mb-1 block text-sm font-medium">معلومات الطقس</label>
                 <Textarea
                   value={form.weatherInfo}
                   onChange={(e) =>
@@ -191,17 +191,17 @@ export function AdminStarEditPage() {
 
           <Card>
             <CardHeader>
-              <CardTitle>Lists</CardTitle>
+              <CardTitle>قوائم</CardTitle>
             </CardHeader>
             <CardContent className="space-y-6">
               <DynamicList
-                title="Agricultural info"
+                title="معلومات زراعية"
                 items={form.agriculturalInfo}
                 onAdd={(v) => addListItem("agriculturalInfo", v)}
                 onRemove={(i) => removeListItem("agriculturalInfo", i)}
               />
               <DynamicList
-                title="Tips"
+                title="نصائح"
                 items={form.tips}
                 onAdd={(v) => addListItem("tips", v)}
                 onRemove={(i) => removeListItem("tips", i)}
@@ -212,10 +212,10 @@ export function AdminStarEditPage() {
 
         <div className="mt-6 flex gap-2">
           <Button type="submit" disabled={saving}>
-            {saving ? "Saving..." : "Save"}
+            {saving ? "جاري الحفظ..." : "حفظ"}
           </Button>
           <Button type="button" variant="outline" onClick={() => navigate("/admin/stars")}>
-            Cancel
+            إلغاء
           </Button>
         </div>
       </form>
@@ -249,7 +249,7 @@ function DynamicList({
               setInput("");
             }
           }}
-          placeholder="Add item..."
+          placeholder="إضافة عنصر..."
         />
         <Button
           type="button"
@@ -259,7 +259,7 @@ function DynamicList({
             setInput("");
           }}
         >
-          Add
+          إضافة
         </Button>
       </div>
       <ul className="mt-2 space-y-1">
@@ -272,7 +272,7 @@ function DynamicList({
               size="sm"
               onClick={() => onRemove(i)}
             >
-              Remove
+              إزالة
             </Button>
           </li>
         ))}

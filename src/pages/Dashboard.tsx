@@ -22,44 +22,53 @@ export function Dashboard() {
   return (
     <div className="space-y-8">
       <div>
-        <h1 className="text-2xl font-bold tracking-tight sm:text-3xl">Dashboard</h1>
-        <p className="mt-1 text-muted-foreground">Overview of seasons and stars</p>
+        <h1 className="text-2xl font-bold tracking-tight sm:text-3xl">لوحة التحكم</h1>
+        <p className="mt-1 text-muted-foreground">نظرة عامة على الفصول والنجوم</p>
       </div>
 
       <div className="grid gap-4 sm:grid-cols-2 md:grid-cols-3">
-        <StatCard title="Seasons" value={seasonsCount} icon={Sun} />
-        <StatCard title="Total Stars" value={starsCount} icon={Star} />
-        <StatCard title="Calendar" value="Public" icon={Calendar} description="View at /calendar" />
+        <StatCard title="الفصول" value={seasonsCount} icon={Sun} />
+        <StatCard title="إجمالي النجوم" value={starsCount} icon={Star} />
+        <StatCard title="التقويم" value="عام" icon={Calendar} description="عرض في /calendar" />
       </div>
 
       <div>
-        <h2 className="mb-4 text-lg font-semibold">Recent Stars</h2>
+        <h2 className="mb-4 text-lg font-semibold">أحدث النجوم</h2>
         <DataTable<StarType>
           data={recentStars}
           keyExtractor={(s) => s.id}
           columns={[
-            { key: "name", header: "Name" },
+            {
+              key: "name",
+              header: "الاسم",
+              className: "text-right",
+              render: (s) => (
+                <span className="font-medium" dir="rtl" lang="ar">
+                  {s.name}
+                </span>
+              ),
+            },
             {
               key: "seasonId",
-              header: "Season",
+              header: "الفصل",
               render: (s) => s.season?.name ?? s.seasonId,
             },
             {
               key: "startDate",
-              header: "Start",
-              render: (s) => new Date(s.startDate).toLocaleDateString(),
+              header: "البداية",
+              render: (s) => new Date(s.startDate).toLocaleDateString("ar-EG"),
             },
             {
               key: "id",
               header: "",
               render: (s) => (
                 <Link to={`/admin/stars/${s.id}/edit`} className="text-primary hover:underline">
-                  Edit
+                  تعديل
                 </Link>
               ),
             },
           ]}
-          emptyMessage="No stars yet"
+          emptyMessage="لا توجد نجوم بعد"
         />
       </div>
     </div>

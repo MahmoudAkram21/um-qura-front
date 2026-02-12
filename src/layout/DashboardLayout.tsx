@@ -8,7 +8,7 @@ export function DashboardLayout() {
   const { open } = useSidebar();
 
   return (
-    <div className="flex h-screen bg-background">
+    <div className="flex h-screen bg-background" dir="rtl" lang="ar">
       <Sidebar />
       <div className="flex flex-1 flex-col overflow-hidden">
         <Navbar />

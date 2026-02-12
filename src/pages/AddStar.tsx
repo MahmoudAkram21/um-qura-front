@@ -51,7 +51,7 @@ export function AddStar() {
       const msg = e && typeof e === "object" && "response" in e
         ? (e as { response?: { data?: { message?: string } } }).response?.data?.message
         : null;
-      setError(msg ?? (e instanceof Error ? e.message : "Failed to create star"));
+      setError(msg ?? (e instanceof Error ? e.message : "فشل إنشاء النجمة"));
     } finally {
       setSaving(false);
     }
@@ -70,11 +70,11 @@ export function AddStar() {
 
   return (
     <div className="space-y-6">
-      <h1 className="text-2xl font-bold">Add Star</h1>
+      <h1 className="text-2xl font-bold">إضافة نجمة</h1>
       {noSeasons && (
         <div className="rounded-xl border border-amber-500/50 bg-amber-500/10 px-4 py-3 text-sm text-amber-700 dark:text-amber-400">
-          Create at least one season first from{" "}
-          <Link to="/admin/seasons" className="font-medium underline">Seasons</Link>.
+          أنشئ فصلاً واحداً على الأقل أولاً من{" "}
+          <Link to="/admin/seasons" className="font-medium underline">الفصول</Link>.
         </div>
       )}
       {error && (
@@ -86,11 +86,11 @@ export function AddStar() {
         <div className="grid gap-6 lg:grid-cols-2">
           <Card>
             <CardHeader>
-              <CardTitle>Basic</CardTitle>
+              <CardTitle>البيانات الأساسية</CardTitle>
             </CardHeader>
             <CardContent className="space-y-4">
               <div>
-                <label className="mb-1 block text-sm font-medium">Name</label>
+                <label className="mb-1 block text-sm font-medium">الاسم</label>
                 <Input
                   value={form.name}
                   onChange={(e) => setForm((f) => ({ ...f, name: e.target.value }))}
@@ -98,7 +98,7 @@ export function AddStar() {
                 />
               </div>
               <div>
-                <label className="mb-1 block text-sm font-medium">Season</label>
+                <label className="mb-1 block text-sm font-medium">الفصل</label>
                 <select
                   className="w-full rounded-md border border-input bg-background px-3 py-2 text-sm"
                   value={form.seasonId}
@@ -115,7 +115,7 @@ export function AddStar() {
               </div>
               <div className="grid grid-cols-2 gap-4">
                 <div>
-                  <label className="mb-1 block text-sm font-medium">Start date</label>
+                  <label className="mb-1 block text-sm font-medium">تاريخ البداية</label>
                   <Input
                     type="date"
                     value={form.startDate}
@@ -126,7 +126,7 @@ export function AddStar() {
                   />
                 </div>
                 <div>
-                  <label className="mb-1 block text-sm font-medium">End date</label>
+                  <label className="mb-1 block text-sm font-medium">تاريخ النهاية</label>
                   <Input
                     type="date"
                     value={form.endDate}
@@ -138,7 +138,7 @@ export function AddStar() {
                 </div>
               </div>
               <div>
-                <label className="mb-1 block text-sm font-medium">Description</label>
+                <label className="mb-1 block text-sm font-medium">الوصف</label>
                 <Textarea
                   value={form.description}
                   onChange={(e) =>
@@ -148,7 +148,7 @@ export function AddStar() {
                 />
               </div>
               <div>
-                <label className="mb-1 block text-sm font-medium">Weather info</label>
+                <label className="mb-1 block text-sm font-medium">معلومات الطقس</label>
                 <Textarea
                   value={form.weatherInfo}
                   onChange={(e) =>
@@ -162,17 +162,17 @@ export function AddStar() {
 
           <Card>
             <CardHeader>
-              <CardTitle>Lists</CardTitle>
+              <CardTitle>قوائم</CardTitle>
             </CardHeader>
             <CardContent className="space-y-6">
               <DynamicList
-                title="Agricultural info"
+                title="معلومات زراعية"
                 items={form.agriculturalInfo}
                 onAdd={(v) => addListItem("agriculturalInfo", v)}
                 onRemove={(i) => removeListItem("agriculturalInfo", i)}
               />
               <DynamicList
-                title="Tips"
+                title="نصائح"
                 items={form.tips}
                 onAdd={(v) => addListItem("tips", v)}
                 onRemove={(i) => removeListItem("tips", i)}
@@ -182,10 +182,10 @@ export function AddStar() {
         </div>
         <div className="mt-6 flex gap-2">
           <Button type="submit" disabled={saving || noSeasons}>
-            {saving ? "Saving..." : "Create"}
+            {saving ? "جاري الحفظ..." : "إنشاء"}
           </Button>
           <Button type="button" variant="outline" onClick={() => navigate("/admin/stars")}>
-            Cancel
+            إلغاء
           </Button>
         </div>
       </form>
@@ -219,10 +219,10 @@ function DynamicList({
               setInput("");
             }
           }}
-          placeholder="Add item..."
+          placeholder="إضافة عنصر..."
         />
         <Button type="button" variant="outline" onClick={() => { onAdd(input); setInput(""); }}>
-          Add
+          إضافة
         </Button>
       </div>
       <ul className="mt-2 space-y-1">
@@ -230,7 +230,7 @@ function DynamicList({
           <li key={i} className="flex items-center justify-between rounded border px-2 py-1">
             <span className="text-sm">{item}</span>
             <Button type="button" variant="ghost" size="sm" onClick={() => onRemove(i)}>
-              Remove
+              إزالة
             </Button>
           </li>
         ))}

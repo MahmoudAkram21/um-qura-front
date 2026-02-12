@@ -36,7 +36,7 @@ export function AdminSeasonsPage() {
     setError(null);
     listSeasons()
       .then(setSeasons)
-      .catch((e) => setError(e.response?.data?.message ?? e.message ?? "Failed to load seasons"))
+      .catch((e) => setError(e.response?.data?.message ?? e.message ?? "فشل تحميل الفصول"))
       .finally(() => setLoading(false));
   };
 
@@ -48,11 +48,11 @@ export function AdminSeasonsPage() {
     const name = form.name.trim();
     const duration = form.duration.trim();
     if (!name) {
-      setError("Name is required.");
+      setError("الاسم مطلوب.");
       return;
     }
     if (!duration) {
-      setError("Duration is required.");
+      setError("المدة مطلوبة.");
       return;
     }
     setError(null);
@@ -76,12 +76,12 @@ export function AdminSeasonsPage() {
       const msg = e && typeof e === "object" && "response" in e
         ? (e as { response?: { data?: { message?: string } } }).response?.data?.message
         : null;
-      setError(msg ?? (e instanceof Error ? e.message : "Failed to save season"));
+      setError(msg ?? (e instanceof Error ? e.message : "فشل حفظ الفصل"));
     }
   }
 
   async function handleDelete(id: number) {
-    if (!confirm("Delete this season? Stars in it will also be deleted.")) return;
+    if (!confirm("حذف هذا الفصل؟ ستُحذف النجوم التابعة له أيضاً.")) return;
     setError(null);
     try {
       await deleteSeason(id);
@@ -90,7 +90,7 @@ export function AdminSeasonsPage() {
       const msg = e && typeof e === "object" && "response" in e
         ? (e as { response?: { data?: { message?: string } } }).response?.data?.message
         : null;
-      setError(msg ?? (e instanceof Error ? e.message : "Failed to delete season"));
+      setError(msg ?? (e instanceof Error ? e.message : "فشل حذف الفصل"));
     }
   }
 
@@ -123,9 +123,9 @@ export function AdminSeasonsPage() {
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between">
-        <h1 className="text-2xl font-bold">Seasons</h1>
+        <h1 className="text-2xl font-bold">الفصول</h1>
         <Button onClick={startAdd} disabled={showForm}>
-          Add Season
+          إضافة فصل
         </Button>
       </div>
 
@@ -138,20 +138,20 @@ export function AdminSeasonsPage() {
       {showForm && (
         <Card>
           <CardHeader>
-            <CardTitle>{editing ? "Edit Season" : "New Season"}</CardTitle>
+            <CardTitle>{editing ? "تعديل الفصل" : "فصل جديد"}</CardTitle>
           </CardHeader>
           <CardContent className="space-y-4">
             <div className="grid gap-4 sm:grid-cols-2">
               <div>
-                <label className="mb-1 block text-sm font-medium">Name</label>
+                <label className="mb-1 block text-sm font-medium">الاسم</label>
                 <Input
                   value={form.name}
                   onChange={(e) => setForm((f) => ({ ...f, name: e.target.value }))}
-                  placeholder="e.g. Winter"
+                  placeholder="مثال: الشتاء"
                 />
               </div>
               <div>
-                <label className="mb-1 block text-sm font-medium">Color (hex)</label>
+                <label className="mb-1 block text-sm font-medium">اللون (hex)</label>
                 <Input
                   type="color"
                   value={form.colorHex}
@@ -165,7 +165,7 @@ export function AdminSeasonsPage() {
                 />
               </div>
               <div>
-                <label className="mb-1 block text-sm font-medium">Icon name</label>
+                <label className="mb-1 block text-sm font-medium">اسم الأيقونة</label>
                 <Input
                   value={form.iconName}
                   onChange={(e) => setForm((f) => ({ ...f, iconName: e.target.value }))}
@@ -173,15 +173,15 @@ export function AdminSeasonsPage() {
                 />
               </div>
               <div>
-                <label className="mb-1 block text-sm font-medium">Duration</label>
+                <label className="mb-1 block text-sm font-medium">المدة</label>
                 <Input
                   value={form.duration}
                   onChange={(e) => setForm((f) => ({ ...f, duration: e.target.value }))}
-                  placeholder="e.g. Dec - Feb"
+                  placeholder="مثال: كانون الأول - شباط"
                 />
               </div>
               <div>
-                <label className="mb-1 block text-sm font-medium">Sort order</label>
+                <label className="mb-1 block text-sm font-medium">ترتيب العرض</label>
                 <Input
                   type="number"
                   value={form.sortOrder}
@@ -192,7 +192,7 @@ export function AdminSeasonsPage() {
               </div>
             </div>
             <div className="flex gap-2">
-              <Button onClick={handleSave}>Save</Button>
+              <Button onClick={handleSave}>حفظ</Button>
               <Button
                 variant="outline"
                 onClick={() => {
@@ -200,7 +200,7 @@ export function AdminSeasonsPage() {
                   setAdding(false);
                 }}
               >
-                Cancel
+                إلغاء
               </Button>
             </div>
           </CardContent>
@@ -208,16 +208,16 @@ export function AdminSeasonsPage() {
       )}
 
       {loading ? (
-        <p className="text-muted-foreground">Loading...</p>
+        <p className="text-muted-foreground">جاري التحميل...</p>
       ) : (
         <DataTable<Season>
           data={seasons}
           keyExtractor={(s) => s.id}
           columns={[
-            { key: "name", header: "Name" },
+            { key: "name", header: "الاسم" },
             {
               key: "colorHex",
-              header: "Color",
+              header: "اللون",
               render: (s) => (
                 <span
                   className="inline-block h-6 w-10 rounded border border-border/60"
@@ -226,11 +226,11 @@ export function AdminSeasonsPage() {
                 />
               ),
             },
-            { key: "duration", header: "Duration" },
-            { key: "sortOrder", header: "Order" },
+            { key: "duration", header: "المدة" },
+            { key: "sortOrder", header: "الترتيب" },
             {
               key: "id",
-              header: "Actions",
+              header: "إجراءات",
               render: (s) => (
                 <DropdownMenu>
                   <DropdownMenuTrigger asChild>
@@ -241,21 +241,21 @@ export function AdminSeasonsPage() {
                   <DropdownMenuContent align="end">
                     <DropdownMenuItem onClick={() => startEdit(s)}>
                       <Pencil className="me-2 size-4" />
-                      Edit
+                      تعديل
                     </DropdownMenuItem>
                     <DropdownMenuItem
                       onClick={() => handleDelete(s.id)}
                       className="text-destructive"
                     >
                       <Trash2 className="me-2 size-4" />
-                      Delete
+                      حذف
                     </DropdownMenuItem>
                   </DropdownMenuContent>
                 </DropdownMenu>
               ),
             },
           ]}
-          emptyMessage="No seasons. Add one above."
+          emptyMessage="لا توجد فصول. أضف واحداً أعلاه."
         />
       )}
     </div>

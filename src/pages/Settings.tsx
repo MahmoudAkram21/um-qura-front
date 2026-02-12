@@ -8,16 +8,16 @@ export function Settings() {
 
   return (
     <div className="space-y-6">
-      <h1 className="text-2xl font-bold">Settings</h1>
+      <h1 className="text-2xl font-bold">الإعدادات</h1>
 
       <Card>
         <CardHeader>
-          <CardTitle>Appearance</CardTitle>
-          <CardDescription>Theme and direction</CardDescription>
+          <CardTitle>المظهر</CardTitle>
+          <CardDescription>السمة واتجاه الواجهة</CardDescription>
         </CardHeader>
         <CardContent className="space-y-6">
           <div>
-            <p className="mb-2 text-sm font-medium">Theme</p>
+            <p className="mb-2 text-sm font-medium">السمة</p>
             <div className="flex gap-2">
               <Button
                 variant={theme === "light" ? "default" : "outline"}
@@ -25,7 +25,7 @@ export function Settings() {
                 onClick={() => setTheme("light")}
               >
                 <Sun className="me-1 size-4" />
-                Light
+                فاتح
               </Button>
               <Button
                 variant={theme === "dark" ? "default" : "outline"}
@@ -33,33 +33,33 @@ export function Settings() {
                 onClick={() => setTheme("dark")}
               >
                 <Moon className="me-1 size-4" />
-                Dark
+                داكن
               </Button>
               <Button variant="outline" size="sm" onClick={toggleTheme}>
-                Toggle
+                تبديل
               </Button>
             </div>
           </div>
           <div>
-            <p className="mb-2 text-sm font-medium">Direction</p>
+            <p className="mb-2 text-sm font-medium">الاتجاه</p>
             <div className="flex gap-2">
               <Button
                 variant={dir === "ltr" ? "default" : "outline"}
                 size="sm"
                 onClick={() => setDir("ltr")}
               >
-                LTR
+                من اليسار لليمين
               </Button>
               <Button
                 variant={dir === "rtl" ? "default" : "outline"}
                 size="sm"
                 onClick={() => setDir("rtl")}
               >
-                RTL
+                من اليمين لليسار
               </Button>
               <Button variant="outline" size="sm" onClick={toggleDir}>
                 <Languages className="me-1 size-4" />
-                Toggle
+                تبديل
               </Button>
             </div>
           </div>

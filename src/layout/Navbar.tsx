@@ -23,7 +23,7 @@ export function Navbar() {
         size="icon"
         className="md:hidden"
         onClick={() => setOpen(true)}
-        aria-label="Open menu"
+        aria-label="فتح القائمة"
       >
         <Menu className="size-5" />
       </Button>
@@ -31,10 +31,10 @@ export function Navbar() {
         التقويم الزراعي والطوالع
       </Link>
       <div className="ms-auto flex items-center gap-2">
-        <Button variant="ghost" size="icon" onClick={toggleTheme} aria-label="Toggle theme">
+        <Button variant="ghost" size="icon" onClick={toggleTheme} aria-label="تبديل السمة">
           {theme === "light" ? <Moon className="size-4" /> : <Sun className="size-4" />}
         </Button>
-        <Button variant="ghost" size="icon" onClick={toggleDir} aria-label="Toggle RTL/LTR">
+        <Button variant="ghost" size="icon" onClick={toggleDir} aria-label="تبديل الاتجاه">
           <Languages className="size-4" />
         </Button>
         <DropdownMenu>
@@ -46,7 +46,7 @@ export function Navbar() {
           <DropdownMenuContent align="end">
             <DropdownMenuItem onClick={logout}>
               <LogOut className="me-2 size-4" />
-              Logout
+              تسجيل الخروج
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>

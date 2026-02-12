@@ -13,11 +13,11 @@ import { Button } from "@/components/ui/button";
 import { useSidebar } from "@/contexts/SidebarContext";
 
 const nav = [
-  { to: "/admin", label: "Dashboard", icon: LayoutDashboard },
-  { to: "/admin/seasons", label: "Seasons", icon: Sun },
-  { to: "/admin/stars", label: "Stars", icon: Star },
-  { to: "/admin/stars/new", label: "Add Star", icon: PlusCircle },
-  { to: "/admin/settings", label: "Settings", icon: Settings },
+  { to: "/admin", label: "لوحة التحكم", icon: LayoutDashboard },
+  { to: "/admin/seasons", label: "الفصول", icon: Sun },
+  { to: "/admin/stars", label: "النجوم", icon: Star },
+  { to: "/admin/stars/new", label: "إضافة نجمة", icon: PlusCircle },
+  { to: "/admin/settings", label: "الإعدادات", icon: Settings },
 ];
 
 export function Sidebar() {
@@ -27,7 +27,7 @@ export function Sidebar() {
   return (
     <aside
       className={cn(
-        "flex flex-col border-r border-sidebar-border bg-sidebar text-sidebar-foreground shadow-[var(--shadow-soft)] transition-[width] duration-200 ease-out",
+        "flex flex-col border-e border-sidebar-border bg-sidebar text-sidebar-foreground shadow-[var(--shadow-soft)] transition-[width] duration-200 ease-out",
         open ? "w-56" : "w-16"
       )}
     >
@@ -42,7 +42,7 @@ export function Sidebar() {
           size="icon"
           className="ms-auto shrink-0 rounded-xl"
           onClick={toggle}
-          aria-label={open ? "Collapse sidebar" : "Expand sidebar"}
+          aria-label={open ? "تقليص القائمة" : "توسيع القائمة"}
         >
           {open ? <ChevronLeft className="size-4" /> : <ChevronRight className="size-4" />}
         </Button>

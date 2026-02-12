@@ -39,13 +39,13 @@ export function AdminStarsPage() {
         const msg = e && typeof e === "object" && "response" in e
           ? (e as { response?: { data?: { message?: string } } }).response?.data?.message
           : null;
-        setError(msg ?? (e instanceof Error ? e.message : "Failed to load stars"));
+        setError(msg ?? (e instanceof Error ? e.message : "فشل تحميل النجوم"));
       })
       .finally(() => setLoading(false));
   }, [page, seasonId]);
 
   async function handleDelete(id: number) {
-    if (!confirm("Delete this star?")) return;
+    if (!confirm("حذف هذه النجمة؟")) return;
     setError(null);
     try {
       await deleteStar(id);
@@ -56,16 +56,16 @@ export function AdminStarsPage() {
       const msg = e && typeof e === "object" && "response" in e
         ? (e as { response?: { data?: { message?: string } } }).response?.data?.message
         : null;
-      setError(msg ?? (e instanceof Error ? e.message : "Failed to delete star"));
+      setError(msg ?? (e instanceof Error ? e.message : "فشل حذف النجمة"));
     }
   }
 
   return (
     <div className="space-y-6">
       <div className="flex flex-wrap items-center justify-between gap-4">
-        <h1 className="text-2xl font-bold">Stars</h1>
+        <h1 className="text-2xl font-bold">النجوم</h1>
         <Link to="/admin/stars/new">
-          <Button>Add Star</Button>
+          <Button>إضافة نجمة</Button>
         </Link>
       </div>
 
@@ -77,7 +77,7 @@ export function AdminStarsPage() {
 
       <div className="flex flex-wrap items-center gap-4">
         <label className="flex items-center gap-2">
-          <span className="text-sm font-medium">Season</span>
+          <span className="text-sm font-medium">الفصل</span>
           <select
             className="rounded-md border border-input bg-background px-3 py-2 text-sm"
             value={seasonId ?? ""}
@@ -86,7 +86,7 @@ export function AdminStarsPage() {
               setPage(1);
             }}
           >
-            <option value="">All</option>
+            <option value="">الكل</option>
             {seasons.map((s) => (
               <option key={s.id} value={s.id}>
                 {s.name}
@@ -97,28 +97,28 @@ export function AdminStarsPage() {
       </div>
 
       {loading ? (
-        <p className="text-muted-foreground">Loading...</p>
+        <p className="text-muted-foreground">جاري التحميل...</p>
       ) : (
         <>
           <DataTable<StarType>
             data={stars}
             keyExtractor={(s) => s.id}
             columns={[
-              { key: "name", header: "Name" },
+              { key: "name", header: "الاسم", render: (s) => <span dir="rtl" lang="ar">{s.name}</span> },
               {
                 key: "seasonId",
-                header: "Season",
+                header: "الفصل",
                 render: (s) => s.season?.name ?? s.seasonId,
               },
               {
                 key: "startDate",
-                header: "Start",
-                render: (s) => new Date(s.startDate).toLocaleDateString(),
+                header: "البداية",
+                render: (s) => new Date(s.startDate).toLocaleDateString("ar-EG"),
               },
               {
                 key: "endDate",
-                header: "End",
-                render: (s) => new Date(s.endDate).toLocaleDateString(),
+                header: "النهاية",
+                render: (s) => new Date(s.endDate).toLocaleDateString("ar-EG"),
               },
               {
                 key: "id",
@@ -127,7 +127,7 @@ export function AdminStarsPage() {
                   <div className="flex items-center gap-2">
                     <Link to={`/admin/stars/${s.id}/edit`}>
                       <Button variant="ghost" size="sm">
-                        Edit
+                        تعديل
                       </Button>
                     </Link>
                     <DropdownMenu>
@@ -139,14 +139,14 @@ export function AdminStarsPage() {
                       <DropdownMenuContent align="end">
                         <DropdownMenuItem onClick={() => navigate(`/admin/stars/${s.id}/edit`)}>
                           <Pencil className="me-2 size-4" />
-                          Edit
+                          تعديل
                         </DropdownMenuItem>
                         <DropdownMenuItem
                           onClick={() => handleDelete(s.id)}
                           className="text-destructive"
                         >
                           <Trash2 className="me-2 size-4" />
-                          Delete
+                          حذف
                         </DropdownMenuItem>
                       </DropdownMenuContent>
                     </DropdownMenu>
@@ -154,7 +154,7 @@ export function AdminStarsPage() {
                 ),
               },
             ]}
-            emptyMessage="No stars. Add one or change filters."
+            emptyMessage="لا توجد نجوم. أضف نجمة أو غيّر الفلتر."
           />
           {totalPages > 1 && (
             <div className="flex items-center gap-2">
@@ -164,10 +164,10 @@ export function AdminStarsPage() {
                 disabled={page <= 1}
                 onClick={() => setPage((p) => p - 1)}
               >
-                Previous
+                السابق
               </Button>
               <span className="text-sm text-muted-foreground">
-                Page {page} of {totalPages}
+                صفحة {page} من {totalPages}
               </span>
               <Button
                 variant="outline"
@@ -175,7 +175,7 @@ export function AdminStarsPage() {
                 disabled={page >= totalPages}
                 onClick={() => setPage((p) => p + 1)}
               >
-                Next
+                التالي
               </Button>
             </div>
           )}
