@@ -57,7 +57,8 @@ function rawCalendarToSeason(raw: RawCalendarSeason): CalendarSeason {
   };
 }
 
-const API_BASE = "/api/v1";
+/** API base URL. Set VITE_API_BASE_URL in .env (e.g. https://api.example.com/api/v1) or leave unset for same-origin /api/v1. */
+const API_BASE = import.meta.env.VITE_API_BASE_URL ?? "/api/v1";
 
 const api = axios.create({
   baseURL: API_BASE,
